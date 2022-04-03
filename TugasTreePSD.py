@@ -48,23 +48,35 @@ def preorder(startnode, visit_order):
             visit_order = preorder(startnode.get_right_child(), visit_order) # terjadi rekursi
     return visit_order
 
-def inorder(startnode, visit_order):
-    if startnode:
-        if startnode.has_left_child():
-            visit_order = inorder(startnode.get_left_child(), visit_order) # terjadi rekursi
-        visit_order = visit_order + startnode.get_value() + " "
-        if startnode.has_right_child():
-            visit_order = inorder(startnode.get_right_child(), visit_order) # terjadi rekursi
-    return visit_order
+def inorder(startnode, visit_order):                                        # gunakan parameter startnode (pada awal saat kode berjalan, startnode == root) 
+                                                                            # dan visit_order yang berupa string kosong ("") untuk menyimpan nilai dari Node yang dikunjungi
+    if startnode:                                                           # jika startnode != None, maka jalankan perintah dibawahnya
+        if startnode.has_left_child():                                      # jika startnode memiliki anak di kiri, maka akan
+            visit_order = inorder(startnode.get_left_child(), visit_order)  # melakukan kunjungan ke kiri, dan terjadi rekursi dengan nilai startnode yang baru adalah startnode.get_left_child(), 
+                                                                            # sehingga akan terus mengecek left child dari left child startnode awal
+                                                                            # jika sudah mengecek semua left child dari startnode, dan tidak ada left child lagi, 
+        visit_order = visit_order + startnode.get_value() + " "             # maka catat value dari node tersebut ke dalam visit_order
+        if startnode.has_right_child():                                     # setelah selesai mencatat, cek right child, jika startnode memiliki right child, maka
+            visit_order = inorder(startnode.get_right_child(), visit_order) # terjadi rekursi dengan parameter startnode yang baru adalah startnode.get_right_child.
+                                                                            # dengan begitu, saat child kanan menjadi startnode baru, akan mengecek child kiri mereka terlebih dahulu,
+                                                                            # saat child kiri dari startnode yang baru itu None, maka akan mencatat value dari Node nya ke dalam visit_value, 
+                                                                            # serta mengulang cek right child dari startnode yang baru itu, dan seterusnya.
+    return visit_order                                                      # setelah selesai mengunjungi semua Node dan mencatatnya setiap value Node dalam visit_order, kembalikan (return) nilai visit_order
             
-def postorder(startnode, visit_order):
-    if startnode:
-        if startnode.has_left_child():
-            visit_order = postorder(startnode.get_left_child(), visit_order) # terjadi rekursi
-        if startnode.has_right_child():
-            visit_order = postorder(startnode.get_right_child(), visit_order) # terjadi rekursi
-        visit_order = visit_order + startnode.get_value() + " "
-    return visit_order
+def postorder(startnode, visit_order):                                          # gunakan parameter startnode (pada awal saat kode berjalan, startnode == root) 
+                                                                                # dan visit_order yang berupa string kosong ("") untuk menyimpan nilai dari Node yang dikunjungi
+    if startnode:                                                               # jika startnode != None, maka jalankan perintah dibawahnya
+        if startnode.has_left_child():                                          # jika startnode memiliki anak di kiri, maka akan
+            visit_order = postorder(startnode.get_left_child(), visit_order)    # melakukan kunjungan ke kiri, dan terjadi rekursi dengan nilai startnode yang baru adalah startnode.get_left_child(), 
+                                                                                # sehingga akan terus mengecek left child dari left child startnode awal
+                                                                                # jika sudah mengecek semua left child dari startnode yang berekursi, dan tidak ada left child lagi, 
+        if startnode.has_right_child():                                         # maka cek apakah startnode dari rekursi terakhir tersebut memiliki right child, jika iya
+            visit_order = postorder(startnode.get_right_child(), visit_order)   # terjadi rekursi, dengan parameter startnode yang baru adalah startnode.get_right_child()
+                                                                                # dengan begitu, saat child kanan menjadi startnode baru, akan mengecek child kiri mereka terlebih dahulu,
+                                                                                # saat child kiri dari startnode yang baru itu None, maka akan mengecek child kanan dari startnode baru tersebut, dan begitu seterusnya
+        visit_order = visit_order + startnode.get_value() + " "                 # saat selesai mengecek semua left dan right child dari suatu node,
+                                                                                # sebelum meninggalkan node ke node atasnya, catat node tersebut ke dalam visit_order
+    return visit_order                                                          # setelah selesai mengecek semua node, kembalikan (return) isi dari visit_order
 
 
 # membuat objek node
@@ -75,9 +87,9 @@ da = Node("Da")
 ya = Node("Ya")
 ti = Node("Ti")
 
-# ketentuan soal: kata dengan abjad terkecil sebagai root, ("Da")
-#                 kata dengan abjad terkecil kedua sebagai left child level 1("Hi")
-#                 kata dengan abjad terkecil ketiga sebagai right child level 1 ("Ki")
+# ketentuan pada soal: kata dengan abjad terkecil sebagai root, ("Da")
+#                      kata dengan abjad terkecil kedua sebagai left child level 1("Hi")
+#                      kata dengan abjad terkecil ketiga sebagai right child level 1 ("Ki")
 
 # membuat objek Tree
 myTree = Tree(da)
