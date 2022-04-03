@@ -1,2 +1,4 @@
 # tree-problem-psd
-untuk keperluan tugas kuliah
+untuk memenuhi tugas kuliah Praktikum Struktur Data
+
+[code solusi](TugasTreePSD.py)
